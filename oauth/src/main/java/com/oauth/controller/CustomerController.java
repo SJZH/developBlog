@@ -1,6 +1,5 @@
 package com.oauth.controller;
 
-import com.blog.website.common.APIResult;
 import com.blog.website.common.APIResultWithData;
 import com.oauth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
