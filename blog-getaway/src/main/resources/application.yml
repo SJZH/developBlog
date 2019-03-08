@@ -1,0 +1,21 @@
+server:
+  port: 8088
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8093/eureka/
+spring:
+  application:
+    name: blog-gataway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: oauth-service
+          uri: lb://oauth-service
+          predicates:
+            - Path=/to-oauth/**
+          filters:
+            - StripPrefix=1

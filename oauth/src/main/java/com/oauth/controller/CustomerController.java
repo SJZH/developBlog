@@ -1,6 +1,6 @@
 package com.oauth.controller;
 
-import com.blog.website.common.APIResultWithData;
+import com.common.common.APIResultWithData;
 import com.oauth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,5 +23,4 @@ public class CustomerController {
         result.setData(userService.getByName(name));
         return  result;
     }
-
 }

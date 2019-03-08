@@ -1,4 +1,4 @@
-package com.blog.website.common;
+package com.common.common;
 
 import java.util.List;
 

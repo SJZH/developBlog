@@ -1,4 +1,4 @@
-package com.oauth.config;
+package com.oauth.website.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +19,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Objects;
 
 /**
@@ -42,11 +46,11 @@ public class Oauth2SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder(){
         return new PasswordEncoder() {
             @Override
             public String encode(CharSequence charSequence) {
-                return charSequence.toString();
+                return encodeByMd5(charSequence.toString());
             }
 
             @Override
@@ -55,7 +59,24 @@ public class Oauth2SecurityConfig extends WebSecurityConfigurerAdapter {
             }
         };
     }
-
+    public String encodeByMd5(String string){
+        // 确定计算方法
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        Base64.Encoder base64Encoder = Base64.getEncoder();
+        // 加密字符串
+        String md5Str = "";
+        try {
+            md5Str = base64Encoder.encodeToString(md5.digest(string.getBytes("utf-8")));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return md5Str;
+    }
 
     @Override
     @Bean
